@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
+
 import com.wb4.controllers.DataBaseConnection;
 import com.wb4.entity.Tour;
 import com.wb4.model.dao.jdbc.JdbcTourAcmdTransportDao;
@@ -14,7 +16,8 @@ public class TourBuilderService {
 	protected static Integer T_ID = 0;
 	protected static Integer ACMD_ID = 1;
 	protected static Integer TRANS_ID = 2;
-	
+	private final Logger logger = Logger.getLogger(TourBuilderService.class.getName());
+
 	protected TourBuilderService() {}
 	
 	public static TourBuilderService getInstance() {
@@ -25,6 +28,7 @@ public class TourBuilderService {
 	}
 	
 	public List<Tour> getAllTours() {
+		logger.info("Trying to get all tours");
 		List<Tour> tourList = new ArrayList<Tour>();
 		List<ArrayList<Integer>> tourAcmdTransList = new ArrayList<ArrayList<Integer>>();
 		JdbcTourAcmdTransportDao tourAcmdTransDao = new JdbcTourAcmdTransportDao(DataBaseConnection.getInstance().getConnection());
@@ -44,6 +48,7 @@ public class TourBuilderService {
 	}
 	
 	public List<Tour> getUserTours(int userId) {
+		logger.info("Trying to get user tours");
 		JdbcUserTourDao userTourDao = new JdbcUserTourDao(DataBaseConnection.getInstance().getConnection());
 		List<Integer> tourListId = userTourDao.findAll(userId);
 		
@@ -70,6 +75,7 @@ public class TourBuilderService {
 	}
 	
 	protected Tour getTour(List<Integer> arrList) {
+		logger.info("Trying to get tour and add to it accommodation and transport");
 		Optional<Tour> tour = Optional.empty();
 
 		tour = TourService.getInstance().find(arrList.get(T_ID));

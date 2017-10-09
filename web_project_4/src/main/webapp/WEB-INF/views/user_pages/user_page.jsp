@@ -16,8 +16,13 @@
 	  	<input type="submit" value = "Go to Tour List">
 	</form>
 	<p>
+	<form method = "POST" action="./rest/usersTours">
+		<input type="submit" value = "Go to Users Tours">
+	</form>
+	<p>
   	<form method = "POST" action = "./rest/logout">
   		<input type="submit" value = "Logout">
-  	</form>			
+  	</form>
+  		
 </body>
 </html>

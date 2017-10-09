@@ -13,10 +13,6 @@
 	  	<input type="submit" value = "Go to Tour List">
 	</form>
 	<p>
-  	<form method = "POST" action = "./rest/logout">
-  		<input type="submit" value = "Logout">
-  	</form>	
-  	<p>
 	<form method = "POST" action = "./rest/discount">
 		Set discount for regular users:
 		<p>
@@ -27,6 +23,10 @@
 		</select>
   		<input type="submit" value = "Set discount">
   	</form>	
-	
+  	
+	<form method = "POST" action = "./rest/logout">
+  		<input type="submit" value = "Logout">
+  	</form>	
+  	<p>
 </body>
 </html>

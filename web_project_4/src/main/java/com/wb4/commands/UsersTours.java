@@ -45,7 +45,7 @@ public class UsersTours implements Commands {
 				TourService.getInstance().createUserTour(user.getId(), t_id);
 			}
 		} else {
-			request.setAttribute("error", "Please, choose any tour.");
+			request.setAttribute("error", "You can choose any tour.");
 		}
 		
 		userTourList = TourBuilderService.getInstance().getUserTours(user.getId());

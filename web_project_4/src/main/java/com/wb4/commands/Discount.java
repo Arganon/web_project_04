@@ -26,7 +26,6 @@ public class Discount implements Commands {
 			throws ServletException, IOException {
 		Double discount = Double.parseDouble(request.getParameter("discount"));
 		DiscountService.getInstance().updateDiscount(discount);
-		System.out.println(discount + " from discount");
 		
 		return ConstantValues.MANAGER_PAGE;
 	}

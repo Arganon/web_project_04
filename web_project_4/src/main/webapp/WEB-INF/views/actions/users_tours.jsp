@@ -20,10 +20,6 @@ background: #efedea;
 </head>
 <body>
 <p>
-		<p>
-		<c:set value="${error}" var="er"></c:set>
-			${er}
-		<br>
 	Your tours:
 	<p>
 	 	<table>
@@ -47,6 +43,9 @@ background: #efedea;
 			</c:forEach>
 		</table>
 		<p>
+		<c:set value="${error}" var="er"></c:set>
+			${er}
+		<br>
 		<form method = "POST" action = "./rest/tourList">
 			<input type="submit" value = "Go to tour list">
 		</form>

@@ -4,6 +4,5 @@
 
 <a href = "login.jsp"> Log in</a>
 <p>
-<a href = "registration.jsp"> Registration</a>
 </body>
 </html>

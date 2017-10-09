@@ -1,0 +1,11 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<!-- <Resource name="jdbc/web_project_4" auth="Container"
+type="javax.sql.DataSource" maxActive="20" 
+maxIdle="30" maxWait="10000"
+username="macbook" 
+password="macbook"
+driverClassName="com.mysql.jdbc.Driver"
+url="jdbc:mysql://localhost:3306/tour_agency"/> -->

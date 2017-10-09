@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.wb4.entity.Accommodation;
 import com.wb4.entity.Tour;
 import com.wb4.entity.Transport;
@@ -18,10 +20,10 @@ import com.wb4.enums.TransportType;
 import com.wb4.enums.UserRole;
 
 public class EntityBuilder {
-	
+
 	public static User getUserObject(ResultSet resultSet) {
 		User user = null;
-		
+	
 		try {
 			user = new User.Builder(resultSet.getString("u_login"), resultSet.getString("u_password"))
 					.setId(resultSet.getInt("u_id"))
