@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class ConnectionPoolController {
 	protected static ConnectionPoolController instance;
-	protected int defaultPoolSize;
+	protected int poolSize;
 	protected Deque<Connection> availableConnections;
 	protected String dbHost;
 	protected String dbName;
@@ -20,9 +20,10 @@ public class ConnectionPoolController {
 	protected String useSSL;
 	
 	protected ConnectionPoolController() {
-		this.defaultPoolSize = 50;
+		this.poolSize = 50;
+		this.availableConnections = new ArrayDeque<Connection>();
 		getDBInfo();
-		fillConnectionPool();
+		fillConnectionPool(this.poolSize);
 	}
 	
 	public static ConnectionPoolController getInstance() {
@@ -77,10 +78,8 @@ public class ConnectionPoolController {
 		return null;
 	}
 	
-	protected void fillConnectionPool() {
-		this.availableConnections = new ArrayDeque<Connection>(this.defaultPoolSize);
-
-		for (int i = 0; i < this.defaultPoolSize; ++i) {
+	protected void fillConnectionPool(int size) {
+		for (int i = 0; i < size; ++i) {
 			this.availableConnections.add(setConnection());
 		}
 	}
@@ -100,7 +99,23 @@ public class ConnectionPoolController {
 		return this.availableConnections.size();
 	}
 	
-	public boolean resize(int newSize) {
+	public synchronized boolean increaseSize(int newSize) {
+		if (this.poolSize > newSize) {
+			return false;
+		}
+		for ( ; this.poolSize != newSize; ++this.poolSize) {
+			release(getConnection());
+		}
+		return true;
+	}
+	
+	public synchronized boolean reduceSize(int newSize) {
+		if (getSize() <  this.poolSize - newSize) {
+			return false;
+		}
+		for ( ; this.poolSize != newSize; --this.poolSize) {
+			getConnection();
+		}
 		
 		return true;
 	}

@@ -26,7 +26,7 @@ public class AccommodationService {
 	}
 	
 	public Optional<Accommodation> find(Integer acmd_id) {
-		logger.info(" Trying to find Accommodation with " + acmd_id + " ID");
+		logger.info(" Trying to find Accommodation with id = " + acmd_id);
 		JdbcAccommodationDao acmdDao = new JdbcAccommodationDao(DataBaseConnection.getInstance().getConnection());
 		Optional<Accommodation> result = acmdDao.find(acmd_id);
 		
