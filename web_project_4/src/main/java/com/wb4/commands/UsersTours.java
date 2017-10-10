@@ -18,6 +18,10 @@ import com.wb4.utilites.MethodsUtils;
 //This class show all users tours, which he was chosen
 public class UsersTours implements Commands {
 	protected static UsersTours instance = null;
+	protected final static String ERROR = "error";
+	protected final static String USER_HAS_THIS_TOUR = "You already have this tour.";
+	protected final static String TOUR_ID = "tourId";
+	
 	protected UsersTours() {}
 
 	public static UsersTours getInstance() {
@@ -31,7 +35,7 @@ public class UsersTours implements Commands {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		User user = (User)request.getSession().getAttribute("USER");
-		String id = request.getParameter("tourId");
+		String id = request.getParameter(TOUR_ID);
 		List<Tour> userTourList;
 		
 		if (id != null) {
@@ -40,12 +44,10 @@ public class UsersTours implements Commands {
 			if (TourService.getInstance()
 					.checkTourInUserList(user.getId(), t_id)
 					.isPresent()) {
-				request.setAttribute("error", "You already have this tour.");
+				request.setAttribute(ERROR, USER_HAS_THIS_TOUR);
 			} else {
 				TourService.getInstance().createUserTour(user.getId(), t_id);
 			}
-		} else {
-			request.setAttribute("error", "You can choose any tour.");
 		}
 		
 		userTourList = TourBuilderService.getInstance().getUserTours(user.getId());

@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
 import com.wb4.entity.Accommodation;
 import com.wb4.entity.Tour;
 import com.wb4.entity.Transport;

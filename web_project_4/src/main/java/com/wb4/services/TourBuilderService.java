@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import com.wb4.controllers.DataBaseConnection;
 import com.wb4.entity.Tour;
+import com.wb4.model.dao.jdbc.JdbcDaoFactory;
 import com.wb4.model.dao.jdbc.JdbcTourAcmdTransportDao;
 import com.wb4.model.dao.jdbc.JdbcUserTourDao;
 
@@ -17,12 +17,15 @@ public class TourBuilderService {
 	protected static Integer ACMD_ID = 1;
 	protected static Integer TRANS_ID = 2;
 	private final Logger logger = Logger.getLogger(TourBuilderService.class.getName());
+	protected JdbcDaoFactory daoFactory;
 
-	protected TourBuilderService() {}
+	protected TourBuilderService(JdbcDaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
 	
 	public static TourBuilderService getInstance() {
 		if (instance == null) {
-			instance = new TourBuilderService();
+			instance = new TourBuilderService(JdbcDaoFactory.getInstance());
 		}
 		return instance;
 	}
@@ -31,7 +34,7 @@ public class TourBuilderService {
 		logger.info("Trying to get all tours");
 		List<Tour> tourList = new ArrayList<Tour>();
 		List<ArrayList<Integer>> tourAcmdTransList = new ArrayList<ArrayList<Integer>>();
-		JdbcTourAcmdTransportDao tourAcmdTransDao = new JdbcTourAcmdTransportDao(DataBaseConnection.getInstance().getConnection());
+		JdbcTourAcmdTransportDao tourAcmdTransDao = this.daoFactory.createJdbcTourAcmdTransportDao();
 		
 		tourAcmdTransList = tourAcmdTransDao.findAll();
 		
@@ -49,7 +52,7 @@ public class TourBuilderService {
 	
 	public List<Tour> getUserTours(int userId) {
 		logger.info("Trying to get user tours");
-		JdbcUserTourDao userTourDao = new JdbcUserTourDao(DataBaseConnection.getInstance().getConnection());
+		JdbcUserTourDao userTourDao = this.daoFactory.createJdbcUserTourDao();
 		List<Integer> tourListId = userTourDao.findAll(userId);
 		
 		List<Tour> tourList = new ArrayList<Tour>();
@@ -59,12 +62,11 @@ public class TourBuilderService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JdbcTourAcmdTransportDao tourAcmdTransDao = new JdbcTourAcmdTransportDao(DataBaseConnection.getInstance().getConnection());
+		JdbcTourAcmdTransportDao tourAcmdTransDao = this.daoFactory.createJdbcTourAcmdTransportDao();
 		
 		for (Integer i : tourListId) {
 			tourList.add(getTour(tourAcmdTransDao.find(i).get()));
 		}
-
 		try {
 			tourAcmdTransDao.close();
 		} catch (Exception e) {

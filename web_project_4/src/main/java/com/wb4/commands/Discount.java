@@ -11,6 +11,7 @@ import com.wb4.services.DiscountService;
 
 public class Discount implements Commands {
 	protected static Discount instance = null;
+	protected final static String DISCOUNT = "discount";
 	
 	protected Discount() {}
 	
@@ -24,7 +25,7 @@ public class Discount implements Commands {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Double discount = Double.parseDouble(request.getParameter("discount"));
+		Double discount = Double.parseDouble(request.getParameter(DISCOUNT));
 		DiscountService.getInstance().updateDiscount(discount);
 		
 		return ConstantValues.MANAGER_PAGE;
