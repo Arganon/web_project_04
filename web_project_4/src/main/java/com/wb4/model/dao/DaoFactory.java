@@ -2,6 +2,7 @@ package com.wb4.model.dao;
 
 import java.sql.Connection;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.controllers.DataBaseConnection;
 import com.wb4.model.dao.jdbc.JdbcAccommodationDao;
 import com.wb4.model.dao.jdbc.JdbcDiscountDao;
@@ -21,6 +22,6 @@ public abstract class DaoFactory {
 	public abstract JdbcUserTourDao createJdbcUserTourDao();
 	
 	public Connection getConnection() {
-		return DataBaseConnection.getInstance().getConnection();
+		return ConnectionPoolController.getInstance().getConnection();
 	}
 }

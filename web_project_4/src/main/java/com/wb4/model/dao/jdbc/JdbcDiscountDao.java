@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.model.dao.GenericDao;
 import com.wb4.services.EntityBuilder;
 
@@ -85,6 +86,6 @@ public class JdbcDiscountDao implements GenericDao<Double> {
 
 	@Override
 	public void close() throws Exception {
-		this.connection.close();
+		ConnectionPoolController.getInstance().release(this.connection);
 	}
 }

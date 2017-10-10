@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.model.dao.GenericDao;
 import com.wb4.services.EntityBuilder;
 
@@ -19,11 +20,6 @@ public class JdbcTourAcmdTransportDao implements GenericDao<ArrayList<Integer>>{
 	
 	public JdbcTourAcmdTransportDao(Connection connection) {
 		this.connection = connection;
-	}
-	
-	@Override
-	public void close() throws Exception {
-		this.connection.close();
 	}
 
 	@Override
@@ -76,5 +72,11 @@ public class JdbcTourAcmdTransportDao implements GenericDao<ArrayList<Integer>>{
 	public boolean update(ArrayList<Integer> e) {
 
 		return false;
+	}
+	
+	@Override
+	public void close() throws Exception {
+		ConnectionPoolController.getInstance().release(this.connection);
+
 	}
 }

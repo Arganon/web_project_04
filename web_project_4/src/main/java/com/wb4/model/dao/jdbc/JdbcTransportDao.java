@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.entity.Transport;
 import com.wb4.model.dao.GenericDao;
 import com.wb4.services.EntityBuilder;
@@ -82,10 +83,6 @@ public class JdbcTransportDao implements GenericDao<Transport> {
 		return result;
 	}
 	
-	public void close() throws Exception {
-		this.connection.close();
-	}
-	
 	private boolean makeChanges(Transport transport, String sqlRequest, Boolean isNew) {
 		PreparedStatement preparedStatement = null;
 		int counter = 0;
@@ -109,5 +106,9 @@ public class JdbcTransportDao implements GenericDao<Transport> {
 			ex.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void close() throws Exception {
+		ConnectionPoolController.getInstance().release(this.connection);
 	}
 }

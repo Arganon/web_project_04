@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.entity.Accommodation;
 import com.wb4.model.dao.GenericDao;
 import com.wb4.services.EntityBuilder;
@@ -109,7 +110,8 @@ public class JdbcAccommodationDao implements GenericDao<Accommodation> {
 		return result;
 	}
 
+	@Override
 	public void close() throws Exception {
-		this.connection.close();
+		ConnectionPoolController.getInstance().release(this.connection);
 	}
 }

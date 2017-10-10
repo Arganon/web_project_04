@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.wb4.controllers.ConnectionPoolController;
 import com.wb4.entity.Tour;
 import com.wb4.model.dao.GenericDao;
 import com.wb4.services.EntityBuilder;
@@ -135,6 +136,6 @@ public class JdbcTourDao implements GenericDao<Tour> {
 	}
 	
 	public void close() throws Exception {
-		this.connection.close();
+		ConnectionPoolController.getInstance().release(this.connection);
 	}
 }
