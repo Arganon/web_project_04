@@ -29,15 +29,17 @@ public class Login implements Commands {
 		String login = request.getParameter(ConstantValues.PARAM_LOGIN);
 		String password = request.getParameter(ConstantValues.PARAM_PASSWORD);
 		String pathToGo = ConstantValues.LOGIN_PAGE;
-
+		Optional<User> user = Optional.empty();
+		
 		if (login != null && password != null) {
-			Optional<User> user = UserService.getInstance().userLogin(login, password);
-			
-			if(user.isPresent()) {
-				request.getSession().setAttribute("USER", user.get());
-				pathToGo = UsersPageRedirect.getInstance().getUserPage(user.get().getUserRole().toString().toUpperCase());
-			}
+			user = UserService.getInstance().userLogin(login, password);
 		}
+		
+		if(user.isPresent()) {
+			request.getSession().setAttribute("USER", user.get());
+			pathToGo = UsersPageRedirect.getInstance().getUserPage(user.get().getUserRole().toString().toUpperCase());
+		}
+		
 		return pathToGo;
 	}
 }
