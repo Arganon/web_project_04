@@ -15,16 +15,16 @@ import com.wb4.services.TourBuilderService;
 import com.wb4.utilites.MethodsUtils;
 
 public class TourList implements Commands {
-	protected static TourList instance = null;
 	protected List<Tour> tourList = new ArrayList<Tour>();
 	
 	protected TourList() {}
 	
+	private static class Holder {
+		private static TourList INSTANCE = new TourList();
+	}
+	
 	public static TourList getInstance() {
-		if (instance == null) {
-			instance = new TourList();
-		}
-		return instance;
+		return TourList.Holder.INSTANCE;
 	}
 
 	@Override

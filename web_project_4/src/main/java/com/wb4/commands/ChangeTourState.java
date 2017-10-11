@@ -12,16 +12,15 @@ import com.wb4.entity.Tour;
 import com.wb4.entity.User;
 import com.wb4.services.TourService;
 
-public class ChangeTourState implements Commands {
-	protected static ChangeTourState instance = null;
+public class ChangeTourState implements Commands {	
+	private ChangeTourState() {}
 	
-	protected ChangeTourState() {}
+	private static class Holder {
+		protected static ChangeTourState INSTANCE = new ChangeTourState();
+	}
 	
 	public static ChangeTourState getInstance() {
-		if (instance == null) {
-			instance = new ChangeTourState();
-		}
-		return instance;
+		return ChangeTourState.Holder.INSTANCE;
 	}
 	
 	@Override

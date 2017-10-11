@@ -13,16 +13,15 @@ import com.wb4.entity.User;
 import com.wb4.model.dao.jdbc.JdbcUserDao;
 import com.wb4.services.ConstantValues;
 
-public class UserList implements Commands {
-	protected static UserList instance = null;
-	
+public class UserList implements Commands {	
 	protected UserList () {}
 
+	private static class Holder {
+		private static UserList INSTANCE = new UserList();
+	}
+	
 	public static UserList getInstance() {
-		if (instance == null) {
-			instance = new UserList();
-		}
-		return instance;
+		return UserList.Holder.INSTANCE;
 	}
 	
 	@Override

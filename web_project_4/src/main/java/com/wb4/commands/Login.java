@@ -11,18 +11,15 @@ import com.wb4.entity.User;
 import com.wb4.services.ConstantValues;
 import com.wb4.services.UserService;
 
-public class Login implements Commands {
-	protected static Login instance = null;
+public class Login implements Commands {	
+	private Login() {}
 	
-	protected Login() {
-		super();
+	private static class Holder {
+		private static Login INSTANCE = new Login();
 	}
 	
 	public static Login getInstance() {
-		if (instance == null) {
-			instance = new Login();
-		}
-		return instance;
+		return Login.Holder.INSTANCE;
 	}
 	
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

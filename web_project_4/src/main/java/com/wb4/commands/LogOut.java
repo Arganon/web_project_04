@@ -8,16 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wb4.services.ConstantValues;
 
-public class LogOut implements Commands {
-	protected static LogOut instance = null;
+public class LogOut implements Commands {	
+	private LogOut() {}
 	
-	protected LogOut() {}
+	private static class Holder {
+		private static LogOut INSTANCE = new LogOut();
+	}
 	
 	public static LogOut getInstance() {
-		if (instance == null) {
-			instance = new LogOut();
-		}
-		return instance;
+		return LogOut.Holder.INSTANCE;
 	}
 	
 	@Override

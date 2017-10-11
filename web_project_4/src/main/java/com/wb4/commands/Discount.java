@@ -10,16 +10,16 @@ import com.wb4.services.ConstantValues;
 import com.wb4.services.DiscountService;
 
 public class Discount implements Commands {
-	protected static Discount instance = null;
 	protected final static String DISCOUNT = "discount";
 	
-	protected Discount() {}
+	private Discount() {}
+	
+	private static class Holder {
+		private static Discount INSTANCE = new Discount();
+	}
 	
 	public static Discount getInstance() {
-		if (instance == null) {
-			instance = new Discount();
-		}
-		return instance;
+		return Discount.Holder.INSTANCE;
 	}
 
 	@Override

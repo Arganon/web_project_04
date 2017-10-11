@@ -17,18 +17,18 @@ import com.wb4.utilites.MethodsUtils;
 
 //This class show all users tours, which he was chosen
 public class UsersTours implements Commands {
-	protected static UsersTours instance = null;
-	protected final static String ERROR = "error";
-	protected final static String USER_HAS_THIS_TOUR = "You already have this tour.";
-	protected final static String TOUR_ID = "tourId";
+	private final static String ERROR = "error";
+	private final static String USER_HAS_THIS_TOUR = "You already have this tour.";
+	private final static String TOUR_ID = "tourId";
 	
 	protected UsersTours() {}
 
+	private static class Holder {
+		private static UsersTours INSTANCE = new UsersTours();
+	}
+	
 	public static UsersTours getInstance() {
-		if (instance == null) {
-			instance = new UsersTours();
-		}
-		return instance;
+		return UsersTours.Holder.INSTANCE;
 	}
 	
 	@Override

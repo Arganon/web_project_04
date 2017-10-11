@@ -12,7 +12,6 @@ import com.wb4.entity.User;
 import com.wb4.services.ConstantValues;
 
 public class UsersPageRedirect implements Commands {
-	protected static UsersPageRedirect instance = null;
 	protected Map<String, String> usersPath = new HashMap<String, String>();
 	
 	protected UsersPageRedirect() {
@@ -22,11 +21,12 @@ public class UsersPageRedirect implements Commands {
 		this.usersPath.put(ConstantValues.MANAGER_ROLE, ConstantValues.MANAGER_PAGE);
 	}
 	
+	private static class Holder {
+		private static UsersPageRedirect INSTANCE = new UsersPageRedirect();
+	}
+	
 	public static UsersPageRedirect getInstance() {
-		if (instance == null) {
-			instance = new UsersPageRedirect();
-		}
-		return instance;
+		return UsersPageRedirect.Holder.INSTANCE;
 	}
 	
 	public String getUserPage(String role) {

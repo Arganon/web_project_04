@@ -53,5 +53,10 @@ background: #efedea;
 		<form method = "POST" action = "./rest/usersPageRedirect">
 			<input type="submit" value = "Go to user page">
 		</form>
+		<p>
+		<form method = "POST" action = "./rest/logout">
+			<input type="submit" value = "Logout">
+		</form>
+		
 </body>
 </html>

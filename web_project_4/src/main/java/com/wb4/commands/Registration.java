@@ -12,14 +12,14 @@ import com.wb4.services.UserService;
 import com.wb4.utilites.ValidateInputData;
 
 public class Registration implements Commands {
-	protected static Registration instance = null;
 	protected Registration() {}
 
+	private static class Holder {
+		private static Registration INSTANCE = new Registration();
+	}
+	
 	public static Registration getInstance() {
-		if (instance == null) {
-			instance = new Registration();
-		}
-		return instance;
+		return Registration.Holder.INSTANCE;
 	}
 	
 	@Override
