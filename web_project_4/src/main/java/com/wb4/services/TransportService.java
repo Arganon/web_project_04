@@ -7,18 +7,18 @@ import com.wb4.model.dao.jdbc.JdbcDaoFactory;
 import com.wb4.model.dao.jdbc.JdbcTransportDao;
 
 public class TransportService {
-	protected static TransportService instance = null;
 	protected JdbcDaoFactory daoFactory;
 	
-	protected TransportService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static TransportService INSTANCE = new TransportService(JdbcDaoFactory.getInstance());
+	}
+	
+	private TransportService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	
 	public static TransportService getInstance() {
-		if (instance == null) {
-			instance = new TransportService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return TransportService.Holder.INSTANCE;
 	}
 	
 	public Optional<Transport> find(Integer acmd_id) {

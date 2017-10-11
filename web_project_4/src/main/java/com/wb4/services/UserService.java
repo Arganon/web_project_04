@@ -9,19 +9,19 @@ import com.wb4.model.dao.jdbc.JdbcDaoFactory;
 import com.wb4.model.dao.jdbc.JdbcUserDao;
 
 public class UserService {
-	protected static UserService instance = null;
 	protected final Logger logger = Logger.getLogger(UserService.class.getName());
 	protected JdbcDaoFactory daoFactory;
 
-	protected UserService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static UserService INSTANCE = new UserService(JdbcDaoFactory.getInstance());
+	}
+	
+	private UserService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	
 	public static UserService getInstance() {
-		if (instance == null) {
-			instance = new UserService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return UserService.Holder.INSTANCE;
 	}
 	
 	public Optional<User> userLogin(String login, String password) {

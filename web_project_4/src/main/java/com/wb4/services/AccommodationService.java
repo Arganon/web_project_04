@@ -10,19 +10,19 @@ import com.wb4.model.dao.jdbc.JdbcDaoFactory;
 import org.apache.log4j.Logger;
 
 public class AccommodationService {
-	protected static AccommodationService instance = null;
 	private final Logger logger = Logger.getLogger(AccommodationService.class.getName());
 	protected JdbcDaoFactory daoFactory;
 	
-	protected AccommodationService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static AccommodationService INSTANCE = new AccommodationService(JdbcDaoFactory.getInstance());
+	}
+	
+	private AccommodationService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 		
 	public static AccommodationService getInstance() {
-		if (instance == null) {
-			instance = new AccommodationService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return AccommodationService.Holder.INSTANCE;
 	}
 	
 	public Optional<Accommodation> find(Integer acmd_id) {

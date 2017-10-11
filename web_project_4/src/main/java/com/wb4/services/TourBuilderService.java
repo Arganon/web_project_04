@@ -12,22 +12,22 @@ import com.wb4.model.dao.jdbc.JdbcTourAcmdTransportDao;
 import com.wb4.model.dao.jdbc.JdbcUserTourDao;
 
 public class TourBuilderService {
-	protected static TourBuilderService instance = null;
 	protected static Integer T_ID = 0;
 	protected static Integer ACMD_ID = 1;
 	protected static Integer TRANS_ID = 2;
 	private final Logger logger = Logger.getLogger(TourBuilderService.class.getName());
 	protected JdbcDaoFactory daoFactory;
 
-	protected TourBuilderService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static TourBuilderService INSTANCE = new TourBuilderService(JdbcDaoFactory.getInstance());
+	}
+	
+	private TourBuilderService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	
 	public static TourBuilderService getInstance() {
-		if (instance == null) {
-			instance = new TourBuilderService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return TourBuilderService.Holder.INSTANCE;
 	}
 	
 	public List<Tour> getAllTours() {

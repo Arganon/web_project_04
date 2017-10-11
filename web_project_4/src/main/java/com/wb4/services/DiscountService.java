@@ -8,19 +8,19 @@ import com.wb4.model.dao.jdbc.JdbcDaoFactory;
 import com.wb4.model.dao.jdbc.JdbcDiscountDao;
 
 public class DiscountService {
-	protected static DiscountService instance = null;
 	private final Logger logger = Logger.getLogger(DiscountService.class.getName());
 	protected JdbcDaoFactory daoFactory;
 
-	protected DiscountService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static DiscountService INSTANCE = new DiscountService(JdbcDaoFactory.getInstance());
+	}
+	
+	private DiscountService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	
 	public static DiscountService getInstance() {
-		if (instance == null) {
-			instance = new DiscountService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return DiscountService.Holder.INSTANCE;
 	}
 	
 	public Optional<Double> getDiscount() {

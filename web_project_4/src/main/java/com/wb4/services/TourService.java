@@ -12,19 +12,19 @@ import com.wb4.model.dao.jdbc.JdbcTourDao;
 import com.wb4.model.dao.jdbc.JdbcUserTourDao;
 
 public class TourService {
-	protected static TourService instance = null;
 	private final Logger logger = Logger.getLogger(TourService.class.getName());
 	protected JdbcDaoFactory daoFactory;
 
-	protected TourService(JdbcDaoFactory daoFactory) {
+	private static class Holder {
+		private static TourService INSTANCE = new TourService(JdbcDaoFactory.getInstance());
+	}
+	
+	private TourService(JdbcDaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	
 	public static TourService getInstance() {
-		if (instance == null) {
-			instance = new TourService(JdbcDaoFactory.getInstance());
-		}
-		return instance;
+		return TourService.Holder.INSTANCE;
 	}
 	
 	public boolean changeTourState(Integer t_id, String t_state) {

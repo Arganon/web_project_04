@@ -16,15 +16,19 @@ import com.wb4.services.EntityBuilder;
 public class JdbcTourDao implements GenericDao<Tour> {
 	Connection connection;
 	
-	protected static final String SELECT_ALL_TOUR = "SELECT * FROM tour";
-	protected static final String SELECT_TOUR_BY_ID = "SELECT * FROM tour WHERE t_id = ?";
+	protected static final String SELECT_ALL_TOUR = "SELECT t_id, country_name, city_name, t_duration, t_state, t_type FROM " + 
+												"tour_agency.tour LEFT JOIN tour_agency.city ON tour.city_id = city.city_id " + 
+												"LEFT JOIN tour_agency.country USING (country_id)";
+	
+	protected static final String SELECT_TOUR_BY_ID = "SELECT t_id, country_name, city_name, t_duration, t_state, t_type FROM " + 
+												"tour_agency.tour LEFT JOIN tour_agency.city ON tour.city_id = city.city_id " + 
+												"LEFT JOIN tour_agency.country USING (country_id) WHERE t_id = ?";
+	
 	protected static final String DELETE_TOUR_BY_ID = "DELETE FROM tour WHERE t_id = ?";
-	protected static final String UPDATE_TOUR = "UPDATE tour SET " +
-											   "country_name = ?, city_name = ?, t_duration = ?, t_state = ?, t_type = ? " +
-											    "WHERE t_id = ?";
+	
 	protected static final String UPDATE_TOUR_STATE = "UPDATE tour SET t_state = ? WHERE t_id = ?";
 	protected static final String CREATE_TOUR = "INSERT INTO tour " + 
-												"(country_name, city_name, t_duration, " + 
+												"(city_name, t_duration, " + 
 												"t_state, t_type) VALUES (?, ?, ?, ?, ?, ?)";
 	
 	public JdbcTourDao(Connection connection) {
@@ -88,11 +92,6 @@ public class JdbcTourDao implements GenericDao<Tour> {
 		makeChanges(tour, CREATE_TOUR, true);
 		return false;
 	}
-
-	public boolean update(Tour tour) {
-		makeChanges(tour, UPDATE_TOUR, false);
-		return false;
-	}
 	
 	private boolean makeChanges(Tour tour, String sqlRequest, Boolean isNew) {
 		PreparedStatement preparedStatement = null;
@@ -100,9 +99,8 @@ public class JdbcTourDao implements GenericDao<Tour> {
 		
 		try {
 			this.connection.setAutoCommit(false);
-			preparedStatement = this.connection.prepareStatement(UPDATE_TOUR);
-			preparedStatement.setString(++counter, tour.getCountry().toString());
-			preparedStatement.setString(++counter, tour.getCity().toString());
+			preparedStatement = this.connection.prepareStatement(sqlRequest);
+			preparedStatement.setInt(++counter, tour.getCity().ordinal());
 			preparedStatement.setInt(++counter, tour.getTourDuration());
 			preparedStatement.setString(++counter, tour.getTourState().toString());
 			preparedStatement.setString(++counter, tour.getTourType().toString());
@@ -133,6 +131,12 @@ public class JdbcTourDao implements GenericDao<Tour> {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	@Override
+	public boolean update(Tour e) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	public void close() throws Exception {
