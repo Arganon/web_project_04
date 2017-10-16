@@ -19,4 +19,8 @@ public class MethodsUtils {
 			t.setPrice(price);
 		}
 	}
+	
+	public static void sortByPrice(List<Tour> tourList) {
+		tourList.sort((p1, p2) -> p1.getPrice().compareTo(p2.getPrice()));
+	}
 }

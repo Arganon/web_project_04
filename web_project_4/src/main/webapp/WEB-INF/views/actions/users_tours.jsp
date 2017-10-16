@@ -19,6 +19,7 @@ background: #efedea;
 <title>Insert title here</title>
 </head>
 <body>
+
 <p>
 	Your tours:
 	<p>

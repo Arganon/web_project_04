@@ -19,6 +19,7 @@ import com.wb4.commands.Discount;
 import com.wb4.commands.LogOut;
 import com.wb4.commands.Login;
 import com.wb4.commands.Registration;
+import com.wb4.commands.SortByPrice;
 import com.wb4.commands.TourList;
 import com.wb4.commands.UserList;
 import com.wb4.commands.UsersPageRedirect;
@@ -37,14 +38,24 @@ public class FrontController extends HttpServlet {
     
     public void init(ServletConfig config) throws ServletException {
     		commandsList.put("POST:/login", Login.getInstance());
+    		commandsList.put("GET:/login", Login.getInstance());
     		commandsList.put("POST:/logout", LogOut.getInstance());
+    		commandsList.put("GET:/logout", LogOut.getInstance());
     		commandsList.put("POST:/tourList", TourList.getInstance());
+    		commandsList.put("GET:/tourList", TourList.getInstance());
     		commandsList.put("POST:/discount", Discount.getInstance());
     		commandsList.put("POST:/usersTours", UsersTours.getInstance());
+    		commandsList.put("GET:/usersTours", UsersTours.getInstance());
     		commandsList.put("POST:/userList", UserList.getInstance());
+    		commandsList.put("GET:/userList", UserList.getInstance());
     		commandsList.put("POST:/registration", Registration.getInstance());
+    		commandsList.put("GET:/registration", Registration.getInstance());
     		commandsList.put("POST:/usersPageRedirect", UsersPageRedirect.getInstance());
+    		commandsList.put("GET:/usersPageRedirect", UsersPageRedirect.getInstance());
     		commandsList.put("POST:/changeTourState", ChangeTourState.getInstance());
+    		commandsList.put("GET:/changeTourState", ChangeTourState.getInstance());
+    		commandsList.put("POST:/sortByPrice", SortByPrice.getInstance());
+    		commandsList.put("GET:/sortByPrice", SortByPrice.getInstance());
     		super.init(config);
     }
 
@@ -59,7 +70,7 @@ public class FrontController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getMethod().toUpperCase();
 		String path = request.getRequestURI();
-		
+
 		path = path.replaceAll(".*/rest", "").replaceAll("\\d+", "");
 		String key = method + ":" + path;
 

@@ -35,11 +35,10 @@ public class TourList implements Commands {
 		User user = (User) request.getSession().getAttribute("USER");
 		
 		MethodsUtils.setPrice(tourList, user);
-
 		String userRole = user.getUserRole().toString();
 		
-		request.setAttribute("role", userRole);
-		request.setAttribute("tourList", tourList);
+		request.getSession().setAttribute("role", userRole);
+		request.getSession().setAttribute("tourList", tourList);
 		
 		if (userRole.equals("MANAGER")) {
 			path_to_go = ConstantValues.MANAGER_PANEL;

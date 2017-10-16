@@ -10,16 +10,20 @@ import com.wb4.entity.User;
 import com.wb4.services.ConstantValues;
 import com.wb4.services.UserService;
 import com.wb4.utilites.ValidateInputData;
-
 public class Registration implements Commands {
-	protected Registration() {}
+	private static volatile Registration instance = null;
 
-	private static class Holder {
-		private static Registration INSTANCE = new Registration();
-	}
+	protected Registration() {}
 	
 	public static Registration getInstance() {
-		return Registration.Holder.INSTANCE;
+		if (instance == null) {
+			synchronized(Registration.class) {
+				if (instance == null) {
+					instance = new Registration();
+				}
+			}
+		}
+		return instance;
 	}
 	
 	@Override
@@ -27,10 +31,15 @@ public class Registration implements Commands {
 			throws ServletException, IOException {
 		
 		User user = makeUser(request, response);
-		
+		synchronized(this) {
+			if (!isCorrectUser(user, request, response)) {
+				return ConstantValues.REGISTRATION_PAGE;
+			}
+		}
 		if (!isCorrectUser(user, request, response)) {
 			return ConstantValues.REGISTRATION_PAGE;
 		}
+		
 		UserService.getInstance().createUser(user);
 		return ConstantValues.LOGIN_PAGE;
 	}

@@ -23,12 +23,15 @@ background: #efedea;
 <body>
 
 	<form method = "POST" action="./rest/usersTours">
+		<c:set var="pageName" value="/WEB-INF/views/actions/tour_list.jsp" scope="session"/>
 
  		<table>
 			<tr>
 				<td>ID</td> <td>Country name</td>  <td>City name</td> 
 				<td>Tour Duration</td> <td>Tour state</td>  <td>Tour type</td> <td>Accommodation</td>
-				<!-- <td>Price per Night</td> --> <td>Transport Type</td><td>Price</td> <td>Choose</td>
+				<!-- <td>Price per Night</td> --> <td>Transport Type</td><td><a href = "./rest/sortByPrice" >Price</a>
+			
+				</td> <td>Choose</td>
 			</tr>
 			<c:forEach items="${tourList}" var="tour" >
 				<tr>
@@ -44,7 +47,6 @@ background: #efedea;
 					<td align="center"><input type="radio" name="tourId" value="${tour.id}"></td>
 				</tr>			
 			</c:forEach>		
-		<c:set var="tours" value="${tourList}" scope="session"/>
 		</table>
 		<p>
 		<input type="submit" value = "Choose and pay">
@@ -58,6 +60,7 @@ background: #efedea;
   	<form method = "POST" action = "./rest/logout">
   		<input type="submit" value = "Logout">
   	</form>
+  	
 	
 </body>
 </html>
