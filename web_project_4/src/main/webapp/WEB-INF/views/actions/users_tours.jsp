@@ -21,15 +21,16 @@ background: #efedea;
 <body>
 
 <p>
+<c:set var="pageName" value="/WEB-INF/views/actions/users_tours.jsp" scope="session"/>
 	Your tours:
 	<p>
 	 	<table>
 			<tr>
 				<td>ID</td> <td>Country name</td>  <td>City name</td> 
 				<td>Tour Duration</td> <td>Tour state</td>  <td>Tour type</td> <td>Accommodation</td>
-				<!-- <td>Price per Night</td> --> <td>Transport Type</td><td>Price</td>
+				<!-- <td>Price per Night</td> --> <td>Transport Type</td><td><a href = "./rest/sortByPrice" >Price</a></td>
 			</tr>
-			<c:forEach items="${userTourList}" var="tour" >
+			<c:forEach items="${tourList}" var="tour" >
 				<tr>
 					<td align="center">${tour.id}</td>
 					<td>${tour.country}</td>

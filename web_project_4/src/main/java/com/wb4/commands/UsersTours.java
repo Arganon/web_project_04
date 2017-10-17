@@ -53,7 +53,7 @@ public class UsersTours implements Commands {
 		userTourList = TourBuilderService.getInstance().getUserTours(user.getId());
 		MethodsUtils.setPrice(userTourList, user);
 	
-		request.setAttribute("userTourList", userTourList);
+		request.getSession().setAttribute("tourList", userTourList);
 		return ConstantValues.USERS_TOURS;
 	}
 }
